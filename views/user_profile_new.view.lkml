@@ -1,6 +1,12 @@
 view: user_profile_new {
   sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.user_profile_new` ;;
 
+  dimension: user_id {
+    type: string
+    sql: ${TABLE}.user_id ;;
+    primary_key: yes
+  }
+
   dimension: account_status {
     type: string
     sql: ${TABLE}.account_status ;;
@@ -121,10 +127,7 @@ view: user_profile_new {
     type: number
     sql: ${TABLE}.total_orders ;;
   }
-  dimension: user_id {
-    type: string
-    sql: ${TABLE}.user_id ;;
-  }
+
   measure: count {
     type: count
   }

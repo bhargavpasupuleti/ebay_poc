@@ -109,10 +109,10 @@ view: campaign_performance_new {
     type: number
     sql: ${TABLE}.revenue_usd ;;
   }
-  dimension: roas {
-    type: number
-    sql: ${TABLE}.roas ;;
-  }
+  # dimension: roas {
+  #   type: number
+  #   sql: ${TABLE}.roas ;;
+  # }
   dimension: segment {
     type: string
     sql: ${TABLE}.segment ;;
@@ -127,5 +127,20 @@ view: campaign_performance_new {
   }
   measure: count {
     type: count
+  }
+
+  measure: total_revenue {
+    type: sum
+    sql: ${revenue_usd} ;;
+  }
+
+  measure: total_cost {
+    type: sum
+    sql: ${cost_usd} ;;
+  }
+
+  measure: roas {
+    type: number
+    sql: SAFE_DIVIDE(${total_revenue}, ${total_cost}) ;;
   }
 }

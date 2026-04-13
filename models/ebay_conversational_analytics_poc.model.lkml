@@ -10,13 +10,25 @@ datagroup: ebay_conversational_analytics_poc_default_datagroup {
 
 persist_with: ebay_conversational_analytics_poc_default_datagroup
 
-explore: message_metadata {}
+explore: user_behavior {
 
-explore: campaign_performance {}
+  from: user_profile_new
+  label: "User Behavior Analysis"
 
-explore: user_profile {}
+  join: behavioral_signals_new {
+    type: left_outer
+    sql_on: ${user_behavior.user_id} = ${behavioral_signals_new.user_id} ;;
+    relationship: one_to_many
+  }
 
-explore: behavioral_signals {}
+}
 
-explore: campaign_dim {}
+# explore: message_metadata {}
 
+# explore: campaign_performance {}
+
+# explore: user_profile {}
+
+# explore: behavioral_signals {}
+
+# explore: campaign_dim {}
