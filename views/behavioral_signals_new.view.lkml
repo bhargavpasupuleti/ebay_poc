@@ -110,6 +110,7 @@ view: behavioral_signals_new {
   dimension: signal_id {
     type: string
     sql: ${TABLE}.signal_id ;;
+    primary_key: yes
   }
   dimension: time_on_page_sec {
     type: number
