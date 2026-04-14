@@ -23,6 +23,20 @@ explore: user_behavior {
 
 }
 
+
+explore: user_behavior_with_desc {
+
+  from: user_profile_desc
+  label: "User Behavior Analysis"
+
+  join: behavioral_signals_desc {
+    type: left_outer
+    sql_on: ${user_behavior_with_desc.user_id} = ${behavioral_signals_desc.user_id} ;;
+    relationship: one_to_many
+  }
+
+}
+
 # explore: message_metadata {}
 
 # explore: campaign_performance {}
