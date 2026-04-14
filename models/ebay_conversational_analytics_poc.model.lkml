@@ -27,7 +27,7 @@ explore: user_behavior {
 explore: user_behavior_with_desc {
 
   from: user_profile_desc
-  label: "User Behavior Analysis"
+  label: "User Activity"
 
   join: behavioral_signals_desc {
     type: left_outer
