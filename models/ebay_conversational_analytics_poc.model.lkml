@@ -37,6 +37,48 @@ explore: user_behavior_with_desc {
 
 }
 
+
+explore: user_analytics_v2 {
+
+  from: user_profile_v2
+
+
+  ###################################
+  # EVENTS (User → Events)
+  ###################################
+
+  join: events_v2 {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${user_analytics_v2.user_id} = ${events_v2.user_id} ;;
+  }
+
+
+  # ####################################
+  # # PURCHASES (User → Transactions)
+  # ####################################
+
+  join: purchase_transaction_v2 {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${user_analytics_v2.user_id} =
+      ${purchase_transaction_v2.user_id} ;;
+  }
+
+
+}
+
+explore: campaign_performance_v2 {
+
+  join: campaign_dim_v2 {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${campaign_dim_v2.campaign_id} = ${campaign_performance_v2.campaign_id} ;;
+  }
+
+
+}
+
 # explore: message_metadata {}
 
 # explore: campaign_performance {}
