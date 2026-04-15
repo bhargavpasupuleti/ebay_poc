@@ -86,4 +86,13 @@ explore: campaign_dim_v2 {
     sql_on: ${events_v2.user_id} = ${purchase_transaction_v2.user_id} ;;
     relationship: one_to_many
   }
+
+
+  join: campaign_dim {
+    type: left_outer
+    sql_on: ${events_v2.campaign_id} = ${campaign_dim_v2.campaign_id} ;;
+    relationship: many_to_one
+  }
+
+
 }
