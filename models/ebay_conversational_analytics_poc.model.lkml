@@ -38,53 +38,52 @@ explore: user_behavior_with_desc {
 }
 
 
-explore: user_analytics_v2 {
+explore: campaign_dim_v2 {
+  label: "camp_analytics_ebay_poc"
+  description: "Campaign‑centric analytics with controlled fanout and correct cardinality"
 
-  from: user_profile_v2
+  ############################
+  # CAMPAIGN PERFORMANCE FACT
+  ############################
+  join: campaign_performance_v2 {
+    type: left_outer
+    sql_on: ${campaign_dim_v2.campaign_id} = ${campaign_performance_v2.campaign_id} ;;
+    relationship: one_to_many
+  }
 
+  ############################
+  # MESSAGE METADATA FACT
+  ############################
+  join: message_metadata_v2 {
+    type: left_outer
+    sql_on: ${campaign_dim_v2.campaign_id} = ${message_metadata_v2.campaign_id} ;;
+    relationship: one_to_many
+  }
 
-  ###################################
-  # EVENTS (User → Events)
-  ###################################
-
+  ############################
+  # EVENT BEHAVIOR FACT
+  ############################
   join: events_v2 {
     type: left_outer
+    sql_on: ${campaign_dim_v2.campaign_id} = ${events_v2.campaign_id} ;;
     relationship: one_to_many
-    sql_on: ${user_analytics_v2.user_id} = ${events_v2.user_id} ;;
   }
 
+  ############################
+  # USER DIMENSION (SAFE MANY→ONE)
+  ############################
+  join: user_profile_v2 {
+    type: left_outer
+    sql_on: ${events_v2.user_id} = ${user_profile_v2.user_id} ;;
+    relationship: many_to_one
+  }
 
-  # ####################################
-  # # PURCHASES (User → Transactions)
-  # ####################################
-
+  ############################
+  # PURCHASE FACT (DOWNSTREAM)
+  ############################
   join: purchase_transaction_v2 {
     type: left_outer
+    sql_on: ${events_v2.user_id} = ${purchase_transaction_v2.user_id} ;;
     relationship: one_to_many
-    sql_on: ${user_analytics_v2.user_id} =
-      ${purchase_transaction_v2.user_id} ;;
   }
-
-
 }
-
-explore: campaign_performance_v2 {
-
-  join: campaign_dim_v2 {
-    type: left_outer
-    relationship: many_to_one
-    sql_on: ${campaign_dim_v2.campaign_id} = ${campaign_performance_v2.campaign_id} ;;
-  }
-
-
-}
-
-# explore: message_metadata {}
-
-# explore: campaign_performance {}
-
-# explore: user_profile {}
-
-# explore: behavioral_signals {}
-
-# explore: campaign_dim {}
