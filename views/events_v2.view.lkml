@@ -155,4 +155,11 @@ view: events_v2 {
     filters: [is_heavy_browse: "yes"]
   }
 
+  dimension: days_to_conversion {
+    type: number
+    sql: DATE_DIFF(${purchase_transaction_v2.transaction_date_date},
+      ${event_date_date}, DAY) ;;
+  }
+
+
 }
