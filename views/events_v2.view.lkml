@@ -13,11 +13,6 @@ view: events_v2 {
   }
 
 
-  dimension: campaign_id {
-    type: string
-    sql: ${TABLE}.campaign_id ;;
-  }
-
   ########################
   # User & Session
   ########################

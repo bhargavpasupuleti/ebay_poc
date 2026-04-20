@@ -139,5 +139,15 @@ view: campaign_dim_v2 {
     type: string
     sql: ${TABLE}.monday_campaign_id ;;
   }
+  measure: count {
+    type: count
+    label: "Number of campaigns"
+  }
+
+  measure: total_budget_usd {
+    type: sum
+    sql: ${budget_usd} ;;
+    value_format_name: usd
+  }
 
 }
