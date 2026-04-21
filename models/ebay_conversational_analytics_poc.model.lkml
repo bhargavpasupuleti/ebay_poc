@@ -45,7 +45,7 @@ include: "/views/events_v2.view"
 include: "/views/purchase_trans_v2.view"
 include: "/views/user_profile_v2.view"
 
-explore: ebay_crm_agent {
+explore: ebay_crm_agent_poc_v0 {
   label:       "eBay CRM – Full Diagnostic Explorer"
   description: "Single explore covering campaigns, messaging, site events, purchases and user profiles. Use for RCA, channel diagnostics, funnel analysis, cohort comparisons and audience deep-dives."
 
@@ -268,4 +268,83 @@ explore: ebay_crm_agent {
     ]
   }
 
+}
+
+
+
+
+
+
+
+include: "/views/campaign_dim_v2.view"
+include: "/views/campaign_performance_v2.view"
+include: "/views/message_metadata_v2.view"
+include: "/views/events_v2.view"
+include: "/views/purchase_trans_v2.view"
+include: "/views/user_profile_v2.view"
+
+explore: ebay_crm_agent {
+  description: "Single explore covering campaigns, messaging, site events, purchases and user profiles. Scoped to campaign-touched users. Use for RCA, channel diagnostics, funnel analysis, cohort comparisons and audience deep-dives."
+
+  from:      campaign_dim_v2
+  view_name: campaign_dim_v2
+
+  join: campaign_performance_v2 {
+    type:         left_outer
+    relationship: one_to_many
+    sql_on:       ${campaign_dim_v2.campaign_id} = ${campaign_performance_v2.campaign_id} ;;
+  }
+
+  join: message_metadata_v2 {
+    type:         left_outer
+    relationship: one_to_many
+    sql_on:       ${campaign_dim_v2.campaign_id} = ${message_metadata_v2.campaign_id} ;;
+  }
+
+  join: user_profile_v2 {
+    type:         left_outer
+    relationship: many_to_one
+    required_joins: [message_metadata_v2]
+    sql_on:       ${message_metadata_v2.user_id} = ${user_profile_v2.user_id} ;;
+  }
+
+  join: events_v2 {
+    type:         left_outer
+    relationship: one_to_many
+    required_joins: [message_metadata_v2]
+    sql_on:       ${message_metadata_v2.user_id} = ${events_v2.user_id} ;;
+  }
+
+  join: purchase_transaction_v2 {
+    type:         left_outer
+    relationship: one_to_many
+    required_joins: [message_metadata_v2]
+    sql_on:       ${message_metadata_v2.user_id} = ${purchase_transaction_v2.user_id} ;;
+  }
+}
+
+
+explore: ebay_user_baseline {
+  description: "User-centric explore NOT scoped to campaign-touched users. Use for churn analysis, lifecycle distribution, cart abandonment baseline, user segmentation, and cohort health checks independent of any campaign."
+
+  from:      user_profile_v2
+  view_name: user_profile_v2
+
+  join: events_v2 {
+    type:         left_outer
+    relationship: one_to_many
+    sql_on:       ${user_profile_v2.user_id} = ${events_v2.user_id} ;;
+  }
+
+  join: purchase_transaction_v2 {
+    type:         left_outer
+    relationship: one_to_many
+    sql_on:       ${user_profile_v2.user_id} = ${purchase_transaction_v2.user_id} ;;
+  }
+
+  join: message_metadata_v2 {
+    type:         left_outer
+    relationship: one_to_many
+    sql_on:       ${user_profile_v2.user_id} = ${message_metadata_v2.user_id} ;;
+  }
 }

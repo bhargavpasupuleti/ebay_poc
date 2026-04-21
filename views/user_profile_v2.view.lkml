@@ -220,4 +220,66 @@ view: user_profile_v2 {
     sql: ${predicted_clv_next_90d} ;;
   }
 
+  dimension: churn_risk_band {
+    type: string
+    description: "Categorised churn risk from predicted_churn_propensity score."
+    sql:
+    CASE
+      WHEN ${predicted_churn_propensity} >= 0.7 THEN 'High Risk'
+      WHEN ${predicted_churn_propensity} >= 0.4 THEN 'Medium Risk'
+      ELSE 'Low Risk'
+    END ;;
+  }
+
+  measure: high_churn_risk_users {
+    type:        count_distinct
+    sql:         ${user_id} ;;
+    description: "Users with predicted churn propensity >= 70%"
+    filters: [churn_risk_band: "High Risk"]
+  }
+
+  measure: avg_churn_propensity {
+    type:              average
+    value_format_name: percent_2
+    sql:               ${predicted_churn_propensity} ;;
+  }
+
+# Opt-in Reachability
+  measure: email_reachable_users {
+    type:    count_distinct
+    sql:     ${user_id} ;;
+    filters: [email_opt_in: "yes"]
+  }
+
+  measure: push_reachable_users {
+    type:    count_distinct
+    sql:     ${user_id} ;;
+    filters: [push_opt_in: "yes"]
+  }
+
+  measure: sms_reachable_users {
+    type:    count_distinct
+    sql:     ${user_id} ;;
+    filters: [sms_opt_in: "yes"]
+  }
+
+# Lifecycle Distribution
+  measure: new_users {
+    type:    count_distinct
+    sql:     ${user_id} ;;
+    filters: [lifecycle_stage: "new"]
+  }
+
+  measure: lapsed_users {
+    type:    count_distinct
+    sql:     ${user_id} ;;
+    filters: [lifecycle_stage: "lapsed"]
+  }
+
+  measure: loyal_users {
+    type:    count_distinct
+    sql:     ${user_id} ;;
+    filters: [lifecycle_stage: "loyal"]
+  }
+
 }

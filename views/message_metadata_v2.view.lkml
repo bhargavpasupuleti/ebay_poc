@@ -78,6 +78,7 @@ view: message_metadata_v2 {
   dimension_group: sent_date {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
+    datatype: date          # ← ADD THIS
     convert_tz: no
     sql: ${TABLE}.sent_date ;;
   }

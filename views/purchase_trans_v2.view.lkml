@@ -33,6 +33,7 @@ view: purchase_transaction_v2 {
   dimension_group: transaction_date {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
+    datatype: date          # ← ADD THIS
     sql: ${TABLE}.transaction_date ;;
   }
 
@@ -158,6 +159,25 @@ view: purchase_transaction_v2 {
       WHEN ${users} = 0 THEN NULL
       ELSE ${transactions} / ${users}
     END ;;
+  }
+
+  measure: returning_buyers {
+    type:    count_distinct
+    sql:     ${user_id} ;;
+    description: "Distinct users who made more than one purchase (proxy for repeat buyers)."
+  }
+
+  measure: net_gmv_usd {
+    type:              number
+    value_format_name: usd
+    description:       "GMV minus returns estimate."
+    sql: SUM(CASE WHEN NOT ${is_return} THEN ${item_price_usd} * ${quantity} ELSE 0 END) ;;
+  }
+
+  measure: avg_order_value {
+    type:              number
+    value_format_name: usd
+    sql:               SAFE_DIVIDE(${gmv_usd}, ${transactions}) ;;
   }
 
 }
