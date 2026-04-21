@@ -235,7 +235,7 @@ explore: ebay_crm_agent {
   join: purchase_transaction_v2 {
     type:         left_outer
     relationship: one_to_many
-    sql_on: ${ user_profile_v2.user_id} = ${purchase_transaction_v2.user_id} ;;
+    sql_on: ${user_profile_v2.user_id} = ${purchase_transaction_v2.user_id} ;;
 
     fields: [
       purchase_transaction_v2.transaction_id,
