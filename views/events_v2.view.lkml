@@ -40,7 +40,7 @@ view: events_v2 {
     timeframes: [raw, date, week, month, year]
     description: "The date and time when the event occurred."
     synonyms: ["Activity Date", "Timestamp", "Occurred At"]
-    sql: ${TABLE}.event_date ;;
+    sql: timestamp(${TABLE}.event_date) ;;
   }
 
   ########################

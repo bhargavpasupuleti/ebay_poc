@@ -25,7 +25,7 @@ view: campaign_performance_v2 {
     timeframes: [raw, date, week, month, quarter, year]
     description: "The specific date when the performance activity (sends, clicks, etc.) occurred."
     synonyms: ["Activity Date", "Event Date", "Timestamp"]
-    sql: ${TABLE}.date ;;
+    sql: timestamp(${TABLE}.date) ;;
   }
 
   dimension: channel {
