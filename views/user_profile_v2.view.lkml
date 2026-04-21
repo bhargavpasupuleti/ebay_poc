@@ -97,6 +97,7 @@ view: user_profile_v2 {
 
   dimension_group: registration_date {
     type: time
+    datatype: timestamp
     timeframes: [date, week, month, year]
     description: "The date the user first created their account."
     synonyms: ["Sign-up Date", "Join Date", "Account Creation"]
@@ -105,6 +106,7 @@ view: user_profile_v2 {
 
   dimension_group: last_purchase_date {
     type: time
+    datatype: timestamp
     timeframes: [date, week, month, year]
     description: "The date of the user's most recent successful transaction."
     synonyms: ["Recent Order Date", "Last Sale"]

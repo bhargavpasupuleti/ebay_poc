@@ -71,7 +71,8 @@ view: campaign_dim_v2 {
   dimension_group: launch_date {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
-    description: "The date and time when the campaign officially started."
+    datatype: timestamp
+    description: "The date and time when the campaign officially starte."
     synonyms: ["Start Date", "Go Live", "Deployment Date"]
     sql: ${TABLE}.launch_date ;;
   }
@@ -79,6 +80,7 @@ view: campaign_dim_v2 {
   dimension_group: end_date {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
+    datatype: timestamp
     description: "The date and time when the campaign was scheduled to conclude."
     synonyms: ["Completion Date", "Expiration", "Finish Date"]
     sql: ${TABLE}.end_date ;;
