@@ -43,7 +43,7 @@ sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.purchase_trans_v2` ;;
 
     description: "The date and time when the purchase was finalized."
     synonyms: ["Order Date", "Purchase Date", "Sale Date", "Transaction Time"]
-    sql: ${TABLE}.transaction_date ;;
+    sql: TIMESTAMP(${TABLE}.transaction_date) ;;
   }
 
   ########################

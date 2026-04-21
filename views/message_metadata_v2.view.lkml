@@ -102,7 +102,7 @@ view: message_metadata_v2 {
     convert_tz: no
     description: "The timestamp representing when the message was dispatched."
     synonyms: ["Deployment Time", "Launch Date", "Message Timestamp"]
-    sql: ${TABLE}.sent_date ;;
+    sql: TIMESTAMP(${TABLE}.sent_date) ;;
   }
 
   ########################

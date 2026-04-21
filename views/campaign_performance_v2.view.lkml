@@ -26,7 +26,7 @@ view: campaign_performance_v2 {
     datatype: timestamp
     description: "The specific date when the performance activity (sends, clicks, etc.) occurred."
     synonyms: ["Activity Date", "Event Date", "Timestamp"]
-    sql: ${TABLE}.date ;;
+    sql: TIMESTAMP(${TABLE}.date) ;;
   }
 
   dimension: channel {

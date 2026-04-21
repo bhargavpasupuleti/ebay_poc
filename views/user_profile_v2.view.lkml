@@ -101,7 +101,7 @@ view: user_profile_v2 {
     timeframes: [date, week, month, year]
     description: "The date the user first created their account."
     synonyms: ["Sign-up Date", "Join Date", "Account Creation"]
-    sql: ${TABLE}.registration_date ;;
+    sql: TIMESTAMP(${TABLE}.registration_date) ;;
   }
 
   dimension_group: last_purchase_date {
@@ -110,7 +110,7 @@ view: user_profile_v2 {
     timeframes: [date, week, month, year]
     description: "The date of the user's most recent successful transaction."
     synonyms: ["Recent Order Date", "Last Sale"]
-    sql: ${TABLE}.last_purchase_date ;;
+    sql: TIMESTAMP(${TABLE}.last_purchase_date) ;;
   }
 
   ########################

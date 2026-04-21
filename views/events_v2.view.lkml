@@ -38,7 +38,7 @@ sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.events_v2` ;;
     datatype: timestamp          # ← ADD THIS — tells Looker it's a DATE not
     description: "The date and time when the event occurred."
     synonyms: ["Activity Date", "Timestamp", "Occurred At"]
-    sql: ${TABLE}.event_date ;;
+    sql: TIMESTAMP(${TABLE}.event_date) ;;
   }
 
   ########################
