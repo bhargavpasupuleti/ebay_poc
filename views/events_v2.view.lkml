@@ -236,5 +236,43 @@ sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.events_v2` ;;
     sql: SAFE_DIVIDE(${purchase_transaction_v2.transactions}, ${add_to_cart_events}) ;;
   }
 
+  dimension: purchased_in_same_category {
+    type: yesno
+    description: "Did this user purchase in the same category as this cart event?"
+    sql: EXISTS (
+          SELECT 1
+          FROM `gcp-crate-barrel-poc.ebay_looker_poc.purchase_trans_v2` AS p
+          WHERE p.user_id  = ${TABLE}.user_id
+          AND   p.category = ${TABLE}.category
+        ) ;;
+  }
+
+  measure: cart_add_users {
+    type:        count_distinct
+    sql:         ${user_id} ;;
+    description: "Distinct users who added to cart"
+    filters:     [event_type: "add_to_cart"]
+  }
+
+  measure: cart_converted_users {
+    type:        count_distinct
+    sql:         ${user_id} ;;
+    description: "Users who added to cart AND purchased in same category"
+    filters:     [event_type: "add_to_cart", purchased_in_same_category: "yes"]
+  }
+
+  measure: cart_abandoned_users {
+    type:        number
+    description: "Users who added to cart but did NOT purchase in same category"
+    sql:         ${cart_add_users} - ${cart_converted_users} ;;
+  }
+
+  measure: cart_abandonment_rate {
+    type:              number
+    value_format_name: percent_2
+    description:       "% of cart-add users who did not purchase in same category"
+    sql: SAFE_DIVIDE(${cart_abandoned_users}, NULLIF(${cart_add_users}, 0)) ;;
+  }
+
 
 }
