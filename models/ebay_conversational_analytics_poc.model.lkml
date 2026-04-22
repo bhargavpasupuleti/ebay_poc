@@ -284,7 +284,7 @@ include: "/views/purchase_trans_v2.view"
 include: "/views/user_profile_v2.view"
 
 explore: ebay_crm_agent {
-  description: "Single explore covering campaigns, messaging, site events, purchases and user profiles. Scoped to campaign-touched users. Use for RCA, channel diagnostics, funnel analysis, cohort comparisons and audience deep-dives."
+  description: "Single explore covering campaigns, messaging, site events, purchases and user profiles. Scoped to campaign-touched users. Use for RCA, channel diagnostics, funnel analysis, cohort comparisons and audience deep-dives.Campaign & Messaging Performance (USE FOR: open rate, CTR, ROI, A/B tests)"
 
   from:      campaign_dim_v2
   view_name: campaign_dim_v2
@@ -325,7 +325,8 @@ explore: ebay_crm_agent {
 
 
 explore: ebay_user_baseline {
-  description: "User-centric explore NOT scoped to campaign-touched users. Use for churn analysis, lifecycle distribution, cart abandonment baseline, user segmentation, and cohort health checks independent of any campaign."
+  description: "User-centric explore NOT scoped to campaign-touched users. Use for churn analysis, lifecycle distribution, cart abandonment baseline, user segmentation, and cohort health checks independent of any campaign.
+  User Health, Churn & Behaviour (USE FOR: cart abandonment, churn, lifecycle)"
 
   from:      user_profile_v2
   view_name: user_profile_v2
