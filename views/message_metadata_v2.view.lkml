@@ -1,5 +1,5 @@
 view: message_metadata_v2 {
-  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.message_metadata_v2` ;;
+  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.message_metadata_v3` ;;
 
   ########################
   # PRIMARY / KEYS

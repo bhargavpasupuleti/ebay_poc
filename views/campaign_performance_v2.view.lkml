@@ -1,5 +1,5 @@
 view: campaign_performance_v2 {
-  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.campaign_performance_v2` ;;
+  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.campaign_performance_v3` ;;
 
   ########################
   # Dimensions

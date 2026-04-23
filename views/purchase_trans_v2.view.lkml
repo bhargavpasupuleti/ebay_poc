@@ -1,5 +1,5 @@
 view: purchase_transaction_v2 {
-sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.purchase_trans_v2` ;;
+sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.purchase_trans_v3` ;;
 
   ########################
   # Primary Key

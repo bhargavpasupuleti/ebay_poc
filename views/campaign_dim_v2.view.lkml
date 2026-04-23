@@ -1,6 +1,6 @@
 
 view: campaign_dim_v2 {
-  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.campaign_dim_v2` ;;
+  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.campaign_dim_v3` ;;
 
   ########################
   # Primary Key

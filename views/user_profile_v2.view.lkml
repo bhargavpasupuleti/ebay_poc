@@ -1,5 +1,5 @@
 view: user_profile_v2 {
-  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.user_profile_v2`  ;;
+  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.user_profile_v3`  ;;
 
   ########################
   # PRIMARY KEY
