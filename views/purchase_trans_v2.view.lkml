@@ -39,11 +39,11 @@ sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.purchase_trans_v3` ;;
     type: time
     timeframes: [raw, date, week, month, quarter, year]
 
-    datatype: timestamp         # ← ADD THIS
+    datatype: date      # ← ADD THIS
 
     description: "The date and time when the purchase was finalized."
     synonyms: ["Order Date", "Purchase Date", "Sale Date", "Transaction Time"]
-    sql: TIMESTAMP(${TABLE}.transaction_date) ;;
+    sql: ${TABLE}.transaction_date ;;
   }
 
   ########################

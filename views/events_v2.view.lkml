@@ -35,10 +35,10 @@ sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.events_v3` ;;
   dimension_group: event_date {
     type: time
     timeframes: [raw, date, week, month, year]
-    datatype: timestamp          # ← ADD THIS — tells Looker it's a DATE not
+    datatype: date         # ← ADD THIS — tells Looker it's a DATE not
     description: "The date and time when the event occurred."
     synonyms: ["Activity Date", "Timestamp", "Occurred At"]
-    sql: TIMESTAMP(${TABLE}.event_date) ;;
+    sql: ${TABLE}.event_date ;;
   }
 
   ########################

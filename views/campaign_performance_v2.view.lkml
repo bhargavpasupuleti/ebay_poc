@@ -23,10 +23,10 @@ view: campaign_performance_v2 {
   dimension_group: date {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
-    datatype: timestamp
+    datatype: date
     description: "The specific date when the performance activity (sends, clicks, etc.) occurred."
     synonyms: ["Activity Date", "Event Date", "Timestamp"]
-    sql: TIMESTAMP(${TABLE}.date) ;;
+    sql: ${TABLE}.date ;;
   }
 
   dimension: channel {

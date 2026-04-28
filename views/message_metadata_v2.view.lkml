@@ -98,11 +98,11 @@ view: message_metadata_v2 {
   dimension_group: sent_date {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
-    datatype: timestamp         # ← ADD THIS
+    datatype: date         # ← ADD THIS
     convert_tz: no
     description: "The timestamp representing when the message was dispatched."
     synonyms: ["Deployment Time", "Launch Date", "Message Timestamp"]
-    sql: TIMESTAMP(${TABLE}.sent_date) ;;
+    sql: ${TABLE}.sent_date ;;
   }
 
   ########################

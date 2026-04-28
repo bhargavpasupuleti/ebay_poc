@@ -97,20 +97,20 @@ view: user_profile_v2 {
 
   dimension_group: registration_date {
     type: time
-    datatype: timestamp
+    datatype: date
     timeframes: [date, week, month, year]
     description: "The date the user first created their account."
     synonyms: ["Sign-up Date", "Join Date", "Account Creation"]
-    sql: TIMESTAMP(${TABLE}.registration_date) ;;
+    sql: ${TABLE}.registration_date ;;
   }
 
   dimension_group: last_purchase_date {
     type: time
-    datatype: timestamp
+    datatype: date
     timeframes: [date, week, month, year]
     description: "The date of the user's most recent successful transaction."
     synonyms: ["Recent Order Date", "Last Sale"]
-    sql: TIMESTAMP(${TABLE}.last_purchase_date) ;;
+    sql: ${TABLE}.last_purchase_date ;;
   }
 
   ########################
@@ -164,14 +164,14 @@ view: user_profile_v2 {
   }
 
   dimension: bbowac_activity_90d {
-    type: number
+    type: yesno
     description: "Internal activity score based on browsing and cart actions (90 days)."
     synonyms: ["Interaction Score", "Activity Level"]
     sql: ${TABLE}.bbowac_activity_90d ;;
   }
 
   dimension: heavy_browse_2b_90d {
-    type: number
+    type: yesno
     description: "Count of deep browsing sessions (2+ pages) in the last 90 days."
     synonyms: ["Deep Browsing Count", "Research Frequency"]
     sql: ${TABLE}.heavy_browse_2b_90d ;;
@@ -224,8 +224,8 @@ view: user_profile_v2 {
     description: "True if the user shows heavy browsing or cart activity signals."
     synonyms: ["Hot Lead", "Likely Buyer", "Active Shopper"]
     sql:
-      ${bbowac_activity_90d} > 0
-      OR ${heavy_browse_2b_90d} > 0 ;;
+      ${bbowac_activity_90d}
+      OR ${heavy_browse_2b_90d}  ;;
   }
 
   ########################
