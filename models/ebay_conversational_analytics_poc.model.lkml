@@ -374,3 +374,16 @@ explore: campaign_planning {
     sql_on:       ${message_metadata_v2.user_id} = ${user_profile_v2.user_id} ;;
   }
 }
+
+explore: crm_engagementtable {
+    join : crm_transaction {
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${crm_engagementtable.chnl_trckng_id} = ${crm_transaction.chnl_trckng_id};;
+    }
+    join: user_segment_dim{
+      type: left_outer
+      relationship: many_to_one
+      sql_on: ${crm_engagementtable.user_id} = ${user_segment_dim.dw_user_id};;
+    }
+}
