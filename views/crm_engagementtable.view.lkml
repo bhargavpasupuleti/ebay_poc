@@ -203,5 +203,9 @@ view: crm_engagementtable {
   type: sum
   sql: ${buyer_qv_cnt};;
   }
+  measure: incremental_gmb {
+    type: sum
+    sql: ${igmb} ;;
+  }
 
 }
