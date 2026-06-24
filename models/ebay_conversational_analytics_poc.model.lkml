@@ -387,3 +387,11 @@ explore: crm_engagementtable {
       sql_on: ${crm_engagementtable.user_id} = ${user_segment_dim.dw_user_id};;
     }
 }
+
+explore: user_segment_dim {
+  join : bbowac {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${user_segment_dim.dw_user_id} = ${bbowac.user_id};;
+  }
+}
