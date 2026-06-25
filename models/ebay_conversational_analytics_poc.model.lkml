@@ -390,8 +390,46 @@ explore: crm_engagementtable {
 
 explore: user_segment_dim {
   join : bbowac {
-    type: left_outer
+    type: inner
     relationship: one_to_many
     sql_on: ${user_segment_dim.dw_user_id} = ${bbowac.user_id};;
   }
+  join:crm_transaction{
+    type: inner
+    relationship: one_to_many
+    sql_on: ${user_segment_dim.dw_user_id} = ${crm_transaction.buyer_id};;
+  }
+join : search_table{
+  type: inner
+  relationship: one_to_many
+  sql_on: ${user_segment_dim.dw_user_id} = ${search_table.user_id};;
+} }
+explore: crm_transaction {
+  join : user_segment_dim {
+  type:  left_outer
+  relationship: many_to_one
+  sql_on: ${user_segment_dim.dw_user_id} = ${crm_transaction.buyer_id};;
+  }
 }
+
+explore: bbowac {
+  join: user_segment_dim {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${user_segment_dim.dw_user_id} = ${bbowac.user_id};;
+    }
+    join: crm_transaction {
+      type: inner
+      relationship: one_to_many
+      sql_on: ${user_segment_dim.dw_user_id} = ${crm_transaction.buyer_id};;
+    }
+  }
+
+  explore: search_table {
+    join: user_segment_dim {
+      type: left_outer
+      relationship: many_to_one
+      sql_on: ${user_segment_dim.dw_user_id} = ${search_table.user_id};;
+    }
+  }
+
