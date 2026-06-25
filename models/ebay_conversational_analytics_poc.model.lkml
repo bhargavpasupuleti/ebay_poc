@@ -418,11 +418,6 @@ explore: bbowac {
     relationship: many_to_one
     sql_on: ${user_segment_dim.dw_user_id} = ${bbowac.user_id};;
     }
-    join: crm_transaction {
-      type: inner
-      relationship: one_to_many
-      sql_on: ${user_segment_dim.dw_user_id} = ${crm_transaction.buyer_id};;
-    }
   }
 
   explore: search_table {
@@ -432,4 +427,3 @@ explore: bbowac {
       sql_on: ${user_segment_dim.dw_user_id} = ${search_table.user_id};;
     }
   }
-
