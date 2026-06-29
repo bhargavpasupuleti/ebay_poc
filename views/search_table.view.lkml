@@ -1,5 +1,5 @@
 view: search_table {
-  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.search table` ;;
+  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.search` ;;
 
   dimension: brand_nm {
     type: string
@@ -65,6 +65,14 @@ view: search_table {
     type: number
     hidden: yes
     sql: ${TABLE}.vi_dwell_time ;;
+  }
+  dimension: item_name {
+    type: string
+    sql: ${TABLE}.item_name ;;
+  }
+  dimension: category_desc {
+    type: string
+    sql: ${TABLE}.category_desc ;;
   }
   measure: count {
     type: count

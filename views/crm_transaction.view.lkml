@@ -1,5 +1,5 @@
 view: crm_transaction {
-  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.crm_transaction` ;;
+  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.transaction` ;;
 
   dimension: buyer_id {
     type: number
@@ -132,6 +132,10 @@ view: crm_transaction {
   dimension: user_site_id {
     type: string
     sql: ${TABLE}.user_site_id ;;
+  }
+  dimension: item_name {
+    type: string
+    sql: ${TABLE}.item_name ;;
   }
   measure: count {
     type: count

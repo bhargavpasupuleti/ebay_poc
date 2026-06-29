@@ -1,5 +1,5 @@
 view: bbowac {
-  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.bbowac1` ;;
+  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.bbowac` ;;
 
   dimension: add_to_cart_cnt {
     type: number
@@ -162,10 +162,10 @@ view: bbowac {
     description: "Total Buy It Now Sold Indicator"
   }
 
-  # measure: total_byng_trans_cnt {
-  #   type: sum
-  #   sql: ${byng_trans_cnt} ;;
-  # }
+  measure: total_byng_trans_cnt {
+    type: sum
+    sql: ${byng_trans_cnt} ;;
+  }
 
   # measure: total_cbt_byng_trans_cnt {
   #   type: sum
@@ -234,6 +234,14 @@ view: bbowac {
   #   sql: ${gmb_lstg_curncy_amt} ;;
   #   value_format_name: decimal_2
   # }
+  dimension: item_name {
+    type: string
+    sql: ${TABLE}.item_name ;;
+  }
+  dimension: category_desc {
+    type: string
+    sql: ${TABLE}.category_desc ;;
+  }
 
   measure: total_gmb_usd_amt {
     type: sum
