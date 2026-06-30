@@ -177,10 +177,10 @@ view: crm_engagementtable {
   type: count_distinct
   sql: ${user_id} ;;
   }
-  measure: reach_rate{
-  type: number
-  sql: ${reached_users} / NULLIF(${user_segment_dim.total_user_ids}, 0);;
-  }
+  # measure: reach_rate{
+  # type: number
+  # sql: ${reached_users} / NULLIF(${user_segment_dim.total_user_ids}, 0);;
+  # }
   measure: clicks_per_user{
   type: number
   sql: ${total_clicks} / NULLIF(${reached_users}, 0);;

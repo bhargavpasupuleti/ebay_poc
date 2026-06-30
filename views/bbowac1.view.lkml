@@ -1,281 +1,491 @@
 view: bbowac {
   sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.bbowac` ;;
 
-  dimension: add_to_cart_cnt {
-    type: number
+  dimension: behavior_row_key {
+    primary_key: yes
     hidden: yes
-    sql: ${TABLE}.add_to_cart_cnt ;;
-  }
-  dimension: asq_cnt {
-    type: number
-    sql: ${TABLE}.asq_cnt ;;
-    hidden: yes
-  }
-  dimension: bid_cnt {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.bid_cnt ;;
-  }
-  dimension: bin_sold_ind {
-    type: number
-    sql: ${TABLE}.bin_sold_ind ;;
-  }
-  dimension: brand_name {
     type: string
-    sql: ${TABLE}.brand_name ;;
+    sql: CONCAT(
+      CAST(${TABLE}.user_id AS STRING), '|',
+      CAST(${TABLE}.item_id AS STRING), '|',
+      CAST(CAST(${TABLE}.cal_dt AS DATE) AS STRING)
+    ) ;;
   }
-  dimension: byng_trans_cnt {
-    type: number
-    sql: ${TABLE}.byng_trans_cnt ;;
-  }
-  dimension_group: cal_dt {
+
+  dimension_group: activity_date {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
     datatype: date
-    sql: ${TABLE}.cal_dt ;;
+    sql: CAST(${TABLE}.cal_dt AS DATE) ;;
   }
-  dimension: cbt_byng_trans_cnt {
-    type: number
-    sql: ${TABLE}.cbt_byng_trans_cnt ;;
-  }
-  dimension: cbt_gmb_lc_amt {
-    type: number
-    sql: ${TABLE}.cbt_gmb_lc_amt ;;
-  }
-  dimension: cbt_gmb_lstg_curncy_amt {
-    type: number
-    sql: ${TABLE}.cbt_gmb_lstg_curncy_amt ;;
-  }
-  dimension: cbt_gmb_usd_amt {
-    type: number
-    sql: ${TABLE}.cbt_gmb_usd_amt ;;
-  }
-  dimension: cbt_item_prchsd_cnt {
-    type: number
-    sql: ${TABLE}.cbt_item_prchsd_cnt ;;
-  }
-  dimension: cndtn_rollup_id {
-    type: number
-    sql: ${TABLE}.cndtn_rollup_id ;;
-  }
-  dimension: curncy_id {
-    type: number
-    sql: ${TABLE}.curncy_id ;;
-  }
-  dimension: dd_byng_trans_cnt {
-    type: number
-    sql: ${TABLE}.dd_byng_trans_cnt ;;
-  }
-  dimension: dd_gmb_lc_amt {
-    type: number
-    sql: ${TABLE}.dd_gmb_lc_amt ;;
-  }
-  dimension: dd_gmb_lstg_curncy_amt {
-    type: number
-    sql: ${TABLE}.dd_gmb_lstg_curncy_amt ;;
-  }
-  dimension: dd_gmb_usd_amt {
-    type: number
-    sql: ${TABLE}.dd_gmb_usd_amt ;;
-  }
-  dimension: dd_item_prchsd_cnt {
-    type: number
-    sql: ${TABLE}.dd_item_prchsd_cnt ;;
-  }
-  dimension: gmb_lc_amt {
-    type: number
-    sql: ${TABLE}.gmb_lc_amt ;;
-  }
-  dimension: gmb_lstg_curncy_amt {
-    type: number
-    sql: ${TABLE}.gmb_lstg_curncy_amt ;;
-  }
-  dimension: gmb_usd_amt {
-    type: number
-    sql: ${TABLE}.gmb_usd_amt ;;
-  }
-  dimension: item_id {
-    type: number
-    sql: ${TABLE}.item_id ;;
-  }
-  dimension: item_prchsd_cnt {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.item_prchsd_cnt ;;
-  }
-  dimension: leaf_categ_id {
-    type: number
-    sql: ${TABLE}.leaf_categ_id ;;
-  }
-  dimension: lstg_site_id {
-    type: number
-    sql: ${TABLE}.lstg_site_id ;;
-  }
-  dimension: lstg_type_cd {
-    type: number
-    sql: ${TABLE}.lstg_type_cd ;;
-  }
-  dimension: offer_cnt {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.offer_cnt ;;
-  }
-  dimension: prod_name {
-    type: string
-    sql: ${TABLE}.prod_name ;;
-  }
+
   dimension: user_id {
     type: number
     sql: ${TABLE}.user_id ;;
   }
-  dimension: watch_cnt {
+
+  dimension: item_id {
     type: number
-    hidden: yes
-    sql: ${TABLE}.watch_cnt ;;
-  }
-  measure: count {
-    type: count
-    drill_fields: [brand_name, prod_name]
-  }
-  # --- SUM MEASURES FOR COUNTS & AMOUNTS ---
-
-  measure: total_add_to_cart_cnt {
-    type: sum
-    sql: ${add_to_cart_cnt} ;;
-    description: "Total Add to Cart Count"
+    sql: ${TABLE}.item_id ;;
   }
 
-  measure: total_asq_cnt {
-    type: sum
-    sql: ${asq_cnt} ;;
-  }
-
-  measure: total_bid_cnt {
-    type: sum
-    sql: ${bid_cnt} ;;
-  }
-
-  measure: total_bin_sold_ind {
-    type: sum
-    sql: ${bin_sold_ind} ;;
-    description: "Total Buy It Now Sold Indicator"
-  }
-
-  measure: total_byng_trans_cnt {
-    type: sum
-    sql: ${byng_trans_cnt} ;;
-  }
-
-  # measure: total_cbt_byng_trans_cnt {
-  #   type: sum
-  #   sql: ${cbt_byng_trans_cnt} ;;
-  # }
-
-  # measure: total_cbt_gmb_lc_amt {
-  #   type: sum
-  #   sql: ${cbt_gmb_lc_amt} ;;
-  #   value_format_name: decimal_2
-  # }
-
-  # measure: total_cbt_gmb_lstg_curncy_amt {
-  #   type: sum
-  #   sql: ${cbt_gmb_lstg_curncy_amt} ;;
-  #   value_format_name: decimal_2
-  # }
-
-  # measure: total_cbt_gmb_usd_amt {
-  #   type: sum
-  #   sql: ${cbt_gmb_usd_amt} ;;
-  #   value_format_name: usd
-  # }
-
-  # measure: total_cbt_item_prchsd_cnt {
-  #   type: sum
-  #   sql: ${cbt_item_prchsd_cnt} ;;
-  # }
-
-  # measure: total_dd_byng_trans_cnt {
-  #   type: sum
-  #   sql: ${dd_byng_trans_cnt} ;;
-  # }
-
-  # measure: total_dd_gmb_lc_amt {
-  #   type: sum
-  #   sql: ${dd_gmb_lc_amt} ;;
-  #   value_format_name: decimal_2
-  # }
-
-  # measure: total_dd_gmb_lstg_curncy_amt {
-  #   type: sum
-  #   sql: ${dd_gmb_lstg_curncy_amt} ;;
-  #   value_format_name: decimal_2
-  # }
-
-  # measure: total_dd_gmb_usd_amt {
-  #   type: sum
-  #   sql: ${dd_gmb_usd_amt} ;;
-  #   value_format_name: usd
-  # }
-
-  # measure: total_dd_item_prchsd_cnt {
-  #   type: sum
-  #   sql: ${dd_item_prchsd_cnt} ;;
-  # }
-
-  # measure: total_gmb_lc_amt {
-  #   type: sum
-  #   sql: ${gmb_lc_amt} ;;
-  #   value_format_name: decimal_2
-  # }
-
-  # measure: total_gmb_lstg_curncy_amt {
-  #   type: sum
-  #   sql: ${gmb_lstg_curncy_amt} ;;
-  #   value_format_name: decimal_2
-  # }
   dimension: item_name {
     type: string
     sql: ${TABLE}.item_name ;;
   }
+
+  dimension: product_name {
+    type: string
+    sql: ${TABLE}.prod_name ;;
+  }
+
+  dimension: brand_name {
+    type: string
+    sql: ${TABLE}.brand_name ;;
+  }
+
+  dimension: category_id {
+    type: number
+    sql: ${TABLE}.leaf_categ_id ;;
+  }
+
   dimension: category_desc {
     type: string
     sql: ${TABLE}.category_desc ;;
   }
 
-  measure: total_gmb_usd_amt {
+  dimension: listing_site_id {
+    type: number
+    sql: ${TABLE}.lstg_site_id ;;
+  }
+
+  dimension: listing_type_cd {
+    type: number
+    sql: ${TABLE}.lstg_type_cd ;;
+  }
+
+  dimension: condition_rollup_id {
+    type: number
+    sql: ${TABLE}.cndtn_rollup_id ;;
+  }
+
+  dimension: currency_id {
+    type: number
+    sql: ${TABLE}.curncy_id ;;
+  }
+
+  dimension: watch_cnt {
+    hidden: yes
+    type: number
+    sql: COALESCE(${TABLE}.watch_cnt, 0) ;;
+  }
+
+  dimension: bid_cnt {
+    hidden: yes
+    type: number
+    sql: COALESCE(${TABLE}.bid_cnt, 0) ;;
+  }
+
+  dimension: add_to_cart_cnt {
+    hidden: yes
+    type: number
+    sql: COALESCE(${TABLE}.add_to_cart_cnt, 0) ;;
+  }
+
+  dimension: offer_cnt {
+    hidden: yes
+    type: number
+    sql: COALESCE(${TABLE}.offer_cnt, 0) ;;
+  }
+
+  dimension: asq_cnt {
+    hidden: yes
+    type: number
+    sql: COALESCE(${TABLE}.asq_cnt, 0) ;;
+  }
+
+  dimension: item_prchsd_cnt {
+    hidden: yes
+    type: number
+    sql: COALESCE(${TABLE}.item_prchsd_cnt, 0) ;;
+  }
+
+  dimension: byng_trans_cnt {
+    hidden: yes
+    type: number
+    sql: COALESCE(${TABLE}.byng_trans_cnt, 0) ;;
+  }
+
+  dimension: bin_sold_ind {
+    hidden: yes
+    type: number
+    sql: COALESCE(${TABLE}.bin_sold_ind, 0) ;;
+  }
+
+  dimension: gmb_usd_amt {
+    hidden: yes
+    type: number
+    sql: COALESCE(${TABLE}.gmb_usd_amt, 0) ;;
+  }
+
+  dimension: gmb_lc_amt {
+    hidden: yes
+    type: number
+    sql: COALESCE(${TABLE}.gmb_lc_amt, 0) ;;
+  }
+
+  dimension: gmb_lstg_curncy_amt {
+    hidden: yes
+    type: number
+    sql: COALESCE(${TABLE}.gmb_lstg_curncy_amt, 0) ;;
+  }
+
+  dimension: watched_item {
+    hidden: yes
+    type: yesno
+    sql: COALESCE(${TABLE}.watch_cnt, 0) > 0 ;;
+  }
+
+  dimension: bid_on_item {
+    hidden: yes
+    type: yesno
+    sql: COALESCE(${TABLE}.bid_cnt, 0) > 0 ;;
+  }
+
+  dimension: added_to_cart {
+    hidden: yes
+    type: yesno
+    sql: COALESCE(${TABLE}.add_to_cart_cnt, 0) > 0 ;;
+  }
+
+  dimension: made_offer {
+    hidden: yes
+    type: yesno
+    sql: COALESCE(${TABLE}.offer_cnt, 0) > 0 ;;
+  }
+
+  dimension: asked_seller {
+    hidden: yes
+    type: yesno
+    sql: COALESCE(${TABLE}.asq_cnt, 0) > 0 ;;
+  }
+
+  dimension: purchased_item {
+    hidden: yes
+    type: yesno
+    sql: COALESCE(${TABLE}.item_prchsd_cnt, 0) > 0 ;;
+  }
+
+  dimension: high_intent_item {
+    hidden: yes
+    type: yesno
+    sql: (
+      COALESCE(${TABLE}.watch_cnt, 0) > 0 OR
+      COALESCE(${TABLE}.bid_cnt, 0) > 0 OR
+      COALESCE(${TABLE}.add_to_cart_cnt, 0) > 0
+    ) ;;
+  }
+
+  dimension: watch_no_purchase_item {
+    hidden: yes
+    type: yesno
+    sql: COALESCE(${TABLE}.watch_cnt, 0) > 0 AND COALESCE(${TABLE}.item_prchsd_cnt, 0) = 0 ;;
+  }
+
+  dimension: bid_no_purchase_item {
+    hidden: yes
+    type: yesno
+    sql: COALESCE(${TABLE}.bid_cnt, 0) > 0 AND COALESCE(${TABLE}.item_prchsd_cnt, 0) = 0 ;;
+  }
+
+  dimension: add_to_cart_no_purchase_item {
+    hidden: yes
+    type: yesno
+    sql: COALESCE(${TABLE}.add_to_cart_cnt, 0) > 0 AND COALESCE(${TABLE}.item_prchsd_cnt, 0) = 0 ;;
+  }
+
+  dimension: high_intent_no_purchase_item {
+    hidden: yes
+    type: yesno
+    sql: (
+      COALESCE(${TABLE}.watch_cnt, 0) > 0 OR
+      COALESCE(${TABLE}.bid_cnt, 0) > 0 OR
+      COALESCE(${TABLE}.add_to_cart_cnt, 0) > 0
+    ) AND COALESCE(${TABLE}.item_prchsd_cnt, 0) = 0 ;;
+  }
+
+  parameter: target_audience_size {
+    type: number
+    default_value: "20000"
+  }
+
+  set: audience_drill_fields {
+    fields: [
+      activity_date_date,
+      user_id,
+      item_id,
+      item_name,
+      product_name,
+      brand_name,
+      category_id,
+      category_desc
+    ]
+  }
+
+  measure: rows {
+    type: count
+    drill_fields: [audience_drill_fields*]
+  }
+
+  measure: users {
+    type: count_distinct
+    sql: ${user_id} ;;
+    drill_fields: [audience_drill_fields*]
+  }
+
+  measure: items {
+    type: count_distinct
+    sql: ${item_id} ;;
+  }
+
+  measure: total_watch_events {
+    type: sum
+    sql: ${watch_cnt} ;;
+  }
+
+  measure: total_bid_events {
+    type: sum
+    sql: ${bid_cnt} ;;
+  }
+
+  measure: total_add_to_cart_events {
+    type: sum
+    sql: ${add_to_cart_cnt} ;;
+  }
+
+  measure: total_offer_events {
+    type: sum
+    sql: ${offer_cnt} ;;
+  }
+
+  measure: total_ask_seller_events {
+    type: sum
+    sql: ${asq_cnt} ;;
+  }
+
+  measure: total_purchase_events {
+    type: sum
+    sql: ${item_prchsd_cnt} ;;
+  }
+
+  measure: total_buying_transactions {
+    type: sum
+    sql: ${byng_trans_cnt} ;;
+  }
+
+  measure: total_gmb_usd {
     type: sum
     sql: ${gmb_usd_amt} ;;
     value_format_name: usd
   }
 
-  measure: total_item_prchsd_cnt {
+  measure: total_gmb_lc {
     type: sum
-    sql: ${item_prchsd_cnt} ;;
+    sql: ${gmb_lc_amt} ;;
+    value_format_name: decimal_2
   }
 
-  measure: total_offer_cnt {
-    type: sum
-    sql: ${offer_cnt} ;;
-  }
-
-  measure: total_watch_cnt {
-    type: sum
-    sql: ${watch_cnt} ;;
-  }
-
-  # --- DISTINCT COUNTS FOR IDs ---
-
-  measure: count_distinct_users {
+  measure: watch_users {
     type: count_distinct
     sql: ${user_id} ;;
-    description: "Count of unique users"
+    filters: [watched_item: "yes"]
+    drill_fields: [audience_drill_fields*]
   }
 
-  measure: count_distinct_items {
+  measure: bid_users {
     type: count_distinct
-    sql: ${item_id} ;;
-    description: "Count of unique items"
+    sql: ${user_id} ;;
+    filters: [bid_on_item: "yes"]
   }
 
+  measure: add_to_cart_users {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [added_to_cart: "yes"]
+  }
+
+  measure: offer_users {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [made_offer: "yes"]
+  }
+
+  measure: ask_seller_users {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [asked_seller: "yes"]
+  }
+
+  measure: purchase_users {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [purchased_item: "yes"]
+  }
+
+  measure: high_intent_users {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [high_intent_item: "yes"]
+  }
+
+  measure: watch_no_purchase_users {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [watch_no_purchase_item: "yes"]
+  }
+
+  measure: bid_no_purchase_users {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [bid_no_purchase_item: "yes"]
+  }
+
+  measure: add_to_cart_no_purchase_users {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [add_to_cart_no_purchase_item: "yes"]
+  }
+
+  measure: high_intent_no_purchase_users {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [high_intent_no_purchase_item: "yes"]
+  }
+
+  measure: watch_users_last_7d {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [watched_item: "yes", activity_date_date: "7 days"]
+  }
+
+  measure: watch_users_last_14d {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [watched_item: "yes", activity_date_date: "14 days"]
+  }
+
+  measure: watch_users_last_30d {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [watched_item: "yes", activity_date_date: "30 days"]
+  }
+
+  measure: watch_users_last_60d {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [watched_item: "yes", activity_date_date: "60 days"]
+  }
+
+  measure: watch_users_last_90d {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [watched_item: "yes", activity_date_date: "90 days"]
+  }
+
+  measure: bid_no_purchase_users_last_7d {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [bid_no_purchase_item: "yes", activity_date_date: "7 days"]
+  }
+
+  measure: high_intent_users_last_14d {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [high_intent_item: "yes", activity_date_date: "14 days"]
+  }
+
+  measure: watch_users_delta_30d_vs_7d {
+    type: number
+    sql: ${watch_users_last_30d} - ${watch_users_last_7d} ;;
+    value_format_name: decimal_0
+  }
+
+  measure: watch_users_growth_7d_to_30d {
+    type: number
+    sql: SAFE_DIVIDE(${watch_users_last_30d} - ${watch_users_last_7d}, ${watch_users_last_7d}) ;;
+    value_format_name: percent_2
+  }
+
+  measure: watch_users_7d_gap_to_target {
+    type: number
+    sql: ABS(${watch_users_last_7d} - CAST({% parameter target_audience_size %} AS NUMERIC)) ;;
+    value_format_name: decimal_0
+  }
+
+  measure: watch_users_14d_gap_to_target {
+    type: number
+    sql: ABS(${watch_users_last_14d} - CAST({% parameter target_audience_size %} AS NUMERIC)) ;;
+    value_format_name: decimal_0
+  }
+
+  measure: watch_users_30d_gap_to_target {
+    type: number
+    sql: ABS(${watch_users_last_30d} - CAST({% parameter target_audience_size %} AS NUMERIC)) ;;
+    value_format_name: decimal_0
+  }
+
+  measure: watch_users_60d_gap_to_target {
+    type: number
+    sql: ABS(${watch_users_last_60d} - CAST({% parameter target_audience_size %} AS NUMERIC)) ;;
+    value_format_name: decimal_0
+  }
+
+  measure: watch_users_90d_gap_to_target {
+    type: number
+    sql: ABS(${watch_users_last_90d} - CAST({% parameter target_audience_size %} AS NUMERIC)) ;;
+    value_format_name: decimal_0
+  }
+
+  measure: avg_items_per_purchase_user {
+    type: number
+    sql: SAFE_DIVIDE(${total_purchase_events}, ${purchase_users}) ;;
+    value_format_name: decimal_2
+  }
+
+  measure: avg_transactions_per_purchase_user {
+    type: number
+    sql: SAFE_DIVIDE(${total_buying_transactions}, ${purchase_users}) ;;
+    value_format_name: decimal_2
+  }
+
+  measure: avg_gmb_usd_per_purchase_user {
+    type: number
+    sql: SAFE_DIVIDE(${total_gmb_usd}, ${purchase_users}) ;;
+    value_format_name: usd
+  }
+
+  measure: watch_to_purchase_rate {
+    type: number
+    sql: SAFE_DIVIDE(${purchase_users}, ${watch_users}) ;;
+    value_format_name: percent_2
+  }
+
+  measure: bid_to_purchase_rate {
+    type: number
+    sql: SAFE_DIVIDE(${purchase_users}, ${bid_users}) ;;
+    value_format_name: percent_2
+  }
+
+  measure: add_to_cart_to_purchase_rate {
+    type: number
+    sql: SAFE_DIVIDE(${purchase_users}, ${add_to_cart_users}) ;;
+    value_format_name: percent_2
+  }
+
+  measure: high_intent_to_purchase_rate {
+    type: number
+    sql: SAFE_DIVIDE(${purchase_users}, ${high_intent_users}) ;;
+    value_format_name: percent_2
+  }
 }
