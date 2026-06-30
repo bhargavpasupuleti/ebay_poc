@@ -427,3 +427,4 @@ explore: bbowac {
       sql_on: ${user_segment_dim.dw_user_id} = ${search_table.user_id};;
     }
   }
+  explore: campaign_performance_table {}
