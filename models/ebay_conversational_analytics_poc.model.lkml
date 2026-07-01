@@ -12,43 +12,43 @@ datagroup: ebay_conversational_analytics_poc_default_datagroup {
 persist_with: ebay_conversational_analytics_poc_default_datagroup
 
 
-explore: user_segment_dim {
+explore: user_segm_dim {
   join : bbowac {
     type: inner
     relationship: one_to_many
-    sql_on: ${user_segment_dim.dw_user_id} = ${bbowac.user_id};;
+    sql_on: ${user_segm_dim.dw_user_id} = ${bbowac.user_id};;
   }
-  join:crm_transaction{
+  join:transaction{
     type: inner
     relationship: one_to_many
-    sql_on: ${user_segment_dim.dw_user_id} = ${crm_transaction.buyer_id};;
+    sql_on: ${user_segm_dim.dw_user_id} = ${transaction.buyer_id};;
   }
-  join : search_table{
+  join : search{
     type: inner
     relationship: one_to_many
-    sql_on: ${user_segment_dim.dw_user_id} = ${search_table.user_id};;
+    sql_on: ${user_segm_dim.dw_user_id} = ${search.user_id};;
   } }
-explore: crm_transaction {
-  join : user_segment_dim {
+explore: transaction {
+  join : user_segm_dim {
     type:  left_outer
     relationship: many_to_one
-    sql_on: ${user_segment_dim.dw_user_id} = ${crm_transaction.buyer_id};;
+    sql_on: ${user_segm_dim.dw_user_id} = ${transaction.buyer_id};;
   }
 }
 
 explore: bbowac {
-  join: user_segment_dim {
+  join: user_segm_dim {
     type: left_outer
     relationship: many_to_one
-    sql_on: ${user_segment_dim.dw_user_id} = ${bbowac.user_id};;
+    sql_on: ${user_segm_dim.dw_user_id} = ${bbowac.user_id};;
   }
 }
 
-explore: search_table {
-  join: user_segment_dim {
+explore: search {
+  join: user_segm_dim {
     type: left_outer
     relationship: many_to_one
-    sql_on: ${user_segment_dim.dw_user_id} = ${search_table.user_id};;
+    sql_on: ${user_segm_dim.dw_user_id} = ${search.user_id};;
   }
 }
 explore: campaign_performance_table {}

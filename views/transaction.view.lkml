@@ -1,4 +1,4 @@
-view: crm_transaction {
+view: transaction {
   sql_table_name: `ebay_looker_poc.transaction` ;;
 
   dimension: transaction_row_key {
@@ -225,11 +225,6 @@ view: crm_transaction {
     ]
   }
 
-  measure: rows {
-    type: count
-    description: "Raw row count at the transaction-item grain."
-    drill_fields: [transaction_drill_fields*]
-  }
 
   measure: transactions {
     type: count_distinct
@@ -244,11 +239,6 @@ view: crm_transaction {
     description: "Distinct buyers in the filtered transaction result set."
   }
 
-  measure: sellers {
-    type: count_distinct
-    sql: ${seller_id} ;;
-    description: "Distinct sellers in the filtered transaction result set."
-  }
 
   measure: items {
     type: count_distinct

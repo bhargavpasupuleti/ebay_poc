@@ -265,11 +265,7 @@ view: bbowac {
     ]
   }
 
-  measure: rows {
-    type: count
-    description: "Raw row count at the base user-item-date grain."
-    drill_fields: [audience_drill_fields*]
-  }
+
 
   measure: users {
     type: count_distinct

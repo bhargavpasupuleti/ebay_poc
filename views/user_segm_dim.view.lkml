@@ -1,4 +1,4 @@
-view: user_segment_dim {
+view: user_segm_dim {
   sql_table_name: `ebay_looker_poc.user_segm_dim` ;;
 
   dimension: dw_user_id {

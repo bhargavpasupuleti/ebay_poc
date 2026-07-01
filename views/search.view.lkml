@@ -1,4 +1,4 @@
-view: search_table {
+view: search{
   sql_table_name: `ebay_looker_poc.search` ;;
 
   dimension: search_row_key {
