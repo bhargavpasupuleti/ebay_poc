@@ -1,5 +1,5 @@
 view: crm_transaction {
-  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.transaction` ;;
+  sql_table_name: `ebay_looker_poc.transaction` ;;
 
   dimension: transaction_row_key {
     primary_key: yes

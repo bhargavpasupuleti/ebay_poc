@@ -1,5 +1,5 @@
 view: user_segment_dim {
-  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.user_segm_dim` ;;
+  sql_table_name: `ebay_looker_poc.user_segm_dim` ;;
 
   dimension: dw_user_id {
     primary_key: yes

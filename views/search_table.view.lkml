@@ -1,5 +1,5 @@
 view: search_table {
-  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.search` ;;
+  sql_table_name: `ebay_looker_poc.search` ;;
 
   dimension: search_row_key {
     primary_key: yes

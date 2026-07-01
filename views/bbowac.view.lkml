@@ -1,5 +1,5 @@
 view: bbowac {
-  sql_table_name: `gcp-crate-barrel-poc.ebay_looker_poc.bbowac` ;;
+  sql_table_name: `ebay_looker_poc.bbowac` ;;
 
   dimension: behavior_row_key {
     primary_key: yes
