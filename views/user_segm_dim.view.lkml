@@ -6,6 +6,7 @@ view: user_segm_dim {
     type: number
     description: "Primary internal user identifier for the segmentation dimension."
     sql: ${TABLE}.dw_user_id ;;
+    value_format: "0"
   }
 
   dimension_group: user_create_date {

@@ -28,12 +28,14 @@ view: transaction {
     type: number
     description: "Internal buyer identifier tied to the purchase."
     sql: ${TABLE}.buyer_id ;;
+    value_format: "0"
   }
 
   dimension: seller_id {
     type: number
     description: "Internal seller identifier tied to the purchased item."
     sql: ${TABLE}.seller_id ;;
+    value_format: "0"
   }
 
   dimension: item_id {

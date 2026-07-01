@@ -25,6 +25,7 @@ view: bbowac {
   dimension: user_id {
     type: number
     description: "Internal customer identifier tied to the item-level action or buying outcome."
+    value_format: "0"
     sql: ${TABLE}.user_id ;;
   }
 

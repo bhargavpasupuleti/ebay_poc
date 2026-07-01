@@ -34,6 +34,7 @@ view: search{
   dimension: user_id {
     type: number
     description: "Internal customer identifier tied to the browse or search activity."
+    value_format: "0"
     sql: ${TABLE}.user_id ;;
   }
 
