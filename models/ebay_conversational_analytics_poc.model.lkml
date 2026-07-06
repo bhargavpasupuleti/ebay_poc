@@ -28,7 +28,10 @@ explore: user_segm_dim {
     relationship: one_to_many
     sql_on: ${user_segm_dim.dw_user_id} = ${search.user_id};;
   } }
+
+
 explore: transaction {
+  label: "Transactions data"
   join : user_segm_dim {
     type:  left_outer
     relationship: many_to_one
@@ -51,7 +54,11 @@ explore: search {
     sql_on: ${user_segm_dim.dw_user_id} = ${search.user_id};;
   }
 }
-explore: campaign_performance_table {}
+
+
+
+
+
 
 # explore: user_behavior {
 
