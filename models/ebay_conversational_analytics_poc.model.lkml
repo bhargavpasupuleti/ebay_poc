@@ -62,3 +62,5 @@ explore: search {
     sql_on: ${user_segm_dim.dw_user_id} = ${search.user_id};;
   }
 }
+
+explore: campaign_performance_table{}
