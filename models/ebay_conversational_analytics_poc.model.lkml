@@ -3,6 +3,7 @@ connection: "ebay_test_agents_poc"
 # include all the views
 include: "/views/**/*.view.lkml"
 include: "/views/old_views/**/*.view.lkml"
+include: "/dashboards/*.dashboard.lookml"
 
 datagroup: ebay_conversational_analytics_poc_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
@@ -62,5 +63,15 @@ explore: search {
     sql_on: ${user_segm_dim.dw_user_id} = ${search.user_id};;
   }
 }
+explore: search_table {
+    from: search
+  join: transaction{
+    type: left_outer
+    relationship: many_to_many
+    sql_on: ${search_table.user_id} = ${transaction.buyer_id} ;;
+  }
+}
 
 explore: campaign_performance_table{}
+
+explore: campaign_insights {}

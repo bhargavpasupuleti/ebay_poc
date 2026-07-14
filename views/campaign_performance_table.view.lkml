@@ -234,6 +234,7 @@ view: campaign_performance_table {
     type: sum
     sql: ${TABLE}.send_cnt ;;
     value_format: "#,##0"
+    drill_fields: [campaign_drill_depth*]
     description: "Total sends from the aggregate table. This is the core delivery-volume metric and should be the denominator for most weighted rate calculations."
   }
 
@@ -241,6 +242,7 @@ view: campaign_performance_table {
     type: sum
     sql: ${TABLE}.click_cnt ;;
     value_format: "#,##0"
+    drill_fields: [campaign_drill_depth*]
     description: "Total clicks attributed in the aggregate table. Use with total_sends to calculate weighted click-through rate."
   }
 
@@ -248,6 +250,7 @@ view: campaign_performance_table {
     type: sum
     sql: ${TABLE}.unsub_cnt_raw ;;
     value_format: "#,##0"
+    drill_fields: [campaign_drill_depth*]
     description: "Total raw unsubscribe count from source. Use when raw unsub signals matter before business-specific adjustments or deduping."
   }
 
@@ -261,6 +264,7 @@ view: campaign_performance_table {
   measure: total_agmb {
     type: sum
     sql: ${TABLE}.agmb ;;
+    drill_fields: [campaign_drill_depth*]
     value_format: "#,##0.00"
     description: "Total attributed GMB. Use for questions about attributed business value driven by CRM touchpoints."
   }
@@ -269,12 +273,14 @@ view: campaign_performance_table {
     type: sum
     sql: ${TABLE}.igmb ;;
     value_format: "#,##0.00"
+    drill_fields: [campaign_drill_depth*]
     description: "Total incremental GMB. Use for uplift-style business impact questions where incremental value is preferred over attributed value."
   }
 
   measure: total_bi {
     type: sum
     sql: ${TABLE}.bi ;;
+    drill_fields: [campaign_drill_depth*]
     value_format: "#,##0.00"
     description: "Total BI metric carried from the upstream aggregate. Treat as a business-owned KPI from the source model; validate the acronym meaning before external-facing use."
   }
@@ -552,10 +558,74 @@ view: campaign_performance_table {
     description: "Incremental GMB as a share of attributed GMB. Useful when users want to understand how much of attributed value appears incremental."
   }
 
+  parameter: dimension_picker {
+    label: "Explore by"
+    type: unquoted
+    default_value: "channel"
+
+    allowed_value: { label: "Channel"          value: "channel" }
+    allowed_value: { label: "Buyer segment"     value: "buyer_segment" }
+    allowed_value: { label: "Program group"     value: "program_group" }
+    allowed_value: { label: "Comm type"         value: "comm_type" }
+    allowed_value: { label: "Lifecycle stage"   value: "lifecycle_stage" }
+  }
+
+  # This is the ONE dimension the visualization actually plots.
+  # Its label and its SQL both change depending on what was picked.
+  dimension: dynamic_dimension {
+    label_from_parameter: dimension_picker
+    type: string
+    sql:
+      {% if dimension_picker._parameter_value == 'channel' %} ${chnl_nm}
+      {% elsif dimension_picker._parameter_value == 'buyer_segment' %} ${buyer_value_segment}
+      {% elsif dimension_picker._parameter_value == 'program_group' %} ${program_name}
+      {% elsif dimension_picker._parameter_value == 'comm_type' %} ${comm_type}
+      {% elsif dimension_picker._parameter_value == 'lifecycle_stage' %} ${lifecycle_lo_seg_nm}
+      {% else %} ${chnl_nm}
+      {% endif %} ;;
+  }
+
+  parameter: measure_picker {
+    label: "Measure"
+    type: unquoted
+    default_value: "sends"
+
+    allowed_value: { label: "Sends"     value: "sends" }
+    allowed_value: { label: "Clicks"    value: "clicks" }
+    allowed_value: { label: "CTR %"     value: "ctr" }
+    allowed_value: { label: "GMV"       value: "gmv" }
+    allowed_value: { label: "Net GMB"   value: "net_gmb" }
+  }
+  measure: dynamic_measure {
+    label_from_parameter: measure_picker
+    type: number
+    sql:
+      {% if measure_picker._parameter_value == 'sends' %} ${total_sends}
+      {% elsif measure_picker._parameter_value == 'clicks' %} ${total_clicks}
+      {% elsif measure_picker._parameter_value == 'ctr' %} ${click_through_rate}
+      {% elsif measure_picker._parameter_value == 'gmv' %} ${total_agmv}
+      {% elsif measure_picker._parameter_value == 'net_gmb' %} ${total_net_gmb}
+      {% else %} ${total_sends}
+      {% endif %} ;;
+    value_format_name: decimal_0
+  }
+
   measure: opt_out_cost_share_of_igmb {
     type: number
     sql: 1.0 * ${total_opt_out_cost} / NULLIF(${total_igmb}, 0) ;;
     value_format: "0.00%"
     description: "Opt-out cost as a share of incremental GMB. Useful for balancing growth against fatigue or opt-out penalties."
+  }
+  set: campaign_drill_depth {
+    fields: [
+      actn_dt_date,
+      chnl_nm,
+      program_name,
+      buyer_value_segment,
+      lifecycle_lo_seg_nm,
+      total_sends,
+      total_clicks,
+      total_agmv
+    ]
   }
 }
