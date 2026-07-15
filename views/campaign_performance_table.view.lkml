@@ -15,7 +15,7 @@ view: campaign_performance_table {
     type: number
     sql: ${TABLE}.retail_week ;;
     value_format: "0"
-    description: "Retail calendar week number for the record. Useful for weekly campaign rollups and WoW trend questions."
+    description: "Retail calendar week number for the record."
   }
 
   dimension_group: rtl_week_beg_dt {

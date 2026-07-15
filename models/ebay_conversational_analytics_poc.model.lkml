@@ -72,6 +72,6 @@ explore: search_table {
   }
 }
 
-explore: campaign_performance_table{}
-
 explore: campaign_insights {}
+explore: campaign_performance_table{
+  description: "Explore how CRM marketing campaigns are performing across channels like push notifications, email, and app/site messaging. See results by campaign, program, and message type (lifecycle, conversion, transactional, etc.), and break performance down by customer segment — buyer value tier, lifecycle stage, or activity status. Answers questions like: which channels and campaigns are driving the most engagement (clicks, quality site visits)"}
